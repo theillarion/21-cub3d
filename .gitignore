@@ -1,1 +1,10 @@
+*.DS_Store/
+*.idea/
+*.vscode/
+*.a
+*.o
+*.dSYM
+vgcore.*
+cmake-build-debug/
 cub3d
+
