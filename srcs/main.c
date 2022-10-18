@@ -17,8 +17,8 @@ bool ft_temp_fill_settings(t_setting	*settings)
 	settings->position.x = POS_X;
 	settings->position.y = POS_Y;
 	settings->direction = NORTH;
-	settings->floor = ft_srgb_create(0x0, 0xAB, 0x9F, 0x00);
-	settings->ceilling = ft_srgb_create(0x0, 0x0, 0x73, 0xBF);
+	settings->floor = ft_srgb_create(0x0, 0xAB, 0x9F, 0x9F);
+	settings->ceilling = ft_srgb_create(0x0, 0x0, 0x73, 0x73);
 	settings->paths[TEX_NORTH] = ft_strdup("textures/greystone.xpm");
 	settings->paths[TEX_EAST] = ft_strdup("textures/bluestone.xpm");
 	settings->paths[TEX_SOUTH] = ft_strdup("textures/redbrick.xpm");
@@ -39,14 +39,24 @@ int	main(int argc, char	**argv)
 {
 	t_env	env;
 
-	(void)argc;
+	// todo wrong arguments error
+	if (argc != 2)
+		return (1);
 	(void)argv;
 	ft_init(&env);
-	if (!ft_temp_fill_settings(&env.settings) || !ft_fill(&env))
+	read_map(argv[1], &env.settings);
+	env.settings.speed_move = SPEED_MOVE;
+	env.settings.speed_rotate = SPEED_ROTATE;
+//	if (!ft_temp_fill_settings(&env.settings) || !ft_fill(&env))
+//	{
+//		printf("Filling error\n");
+//		ft_success(&env);
+//	}
+	if (!ft_fill(&env))
 	{
 		printf("Filling error\n");
 		ft_success(&env);
-	}	
+	}
 	mlx_hook(env.win.ptr, KeyPress,
 		KeyPressMask, ft_event_key_press, (void *)&env);
 	mlx_hook(env.win.ptr, KeyRelease,

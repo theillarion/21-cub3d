@@ -6,6 +6,9 @@
 # include "mlx_int.h"
 # include "libft.h"
 # include "keys.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <errno.h>
 
 //	temp
 # include <stdio.h>
@@ -128,9 +131,10 @@ typedef struct s_game
 
 typedef struct s_map
 {
-	int	**ptr;
-	int	width;
-	int	height;
+	int		**ptr;
+	int		width;
+	int		height;
+	enum	e_position start_pos;
 }	t_map;
 
 typedef struct s_settings
@@ -202,5 +206,11 @@ int			ft_render_next_frame(t_env	*env);
 t_srgb		ft_srgb_create(int s, int r, int g, int b);
 t_srgb		ft_srgb_create_raw(int raw_color);
 void		ft_srgb_set_raw(t_srgb *color, int bits);
+
+// todo replace buffer_size
+# define BUFFER_SIZE 4
+char		*get_next_line(int fd);
+
+void		read_map(char *map_path, t_setting *g);
 
 #endif
