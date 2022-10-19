@@ -106,8 +106,8 @@ int	calc_map_width_height(t_setting *g, char *mapline)
 	errno = 0;
 	if (last_width == -1)
 		ft_raise_error("Empty map!");
-	(*g).map.height = height;
-	(*g).map.width = last_width - 1;
+	(*g).map.height = height + 4;
+	(*g).map.width = last_width + 2;
 	return (0);
 }
 
@@ -366,22 +366,31 @@ void	read_map_file(t_setting *g, int map_fd)
 	if (*current_line == '\0')
 		ft_raise_error("wrong map");
 	calc_map_width_height(g, current_line);
-	map = malloc(sizeof(int *) * (g->map.height + 1));
-	map[g->map.height] = NULL;
+	map = malloc(sizeof(int *) * (g->map.height));
 	map_row = -1;
+	while (++map_row < (g->map.height))
+	{
+		map[map_row] = malloc(sizeof(int) * (g->map.width ));
+		map_col = -1;
+		while (++map_col < (g->map.width + 1))
+			map[map_row][map_col] = -1;
+	}
+	map_row = 1;
 	while (current_line && *current_line)
 	{
-		map[++map_row] = malloc(sizeof(int) * (g->map.width));
-		map_col = -1;
+		++map_row;
+		map_col = 1;
 		while (current_line && *current_line && *current_line != '\n')
 		{
 			if (*current_line == '0' || *current_line == '1' )
-				map[map_row][++map_col] = (int)*current_line - 48;
+				map[map_row][++map_col] = (int) *current_line - 48;
 			else if (*current_line == ' ')
 				map[map_row][++map_col] = -1;
 			else if (*current_line == 'N' || *current_line == 'S' || *current_line == 'W' || *current_line == 'E')
 			{
 				// todo add checking for character already in map
+				if (g->position.x || g->position.y)
+					ft_raise_error("wrong map");
 				map[map_row][++map_col] = 0;
 				g->position.x = map_row;
 				g->position.y = map_col;
@@ -399,6 +408,35 @@ void	read_map_file(t_setting *g, int map_fd)
 			current_line++;
 		}
 		current_line++;
+	}
+	map_row = 0;
+	while (++map_row < (g->map.height))
+	{
+		map_col = 0;
+		while (++map_col < (g->map.width))
+		{
+			printf("%2d", map[map_row][map_col]);
+			if (map[map_row][map_col] == 0)
+			{
+				if (map[map_row - 1][map_col - 1] == -1)
+					ft_raise_error("wrong map");
+				if (map[map_row - 1][map_col] == -1)
+					ft_raise_error("wrong map");
+				if (map[map_row - 1][map_col + 1] == -1)
+					ft_raise_error("wrong map");
+				if (map[map_row][map_col - 1] == -1)
+					ft_raise_error("wrong map");
+				if (map[map_row][map_col + 1] == -1)
+					ft_raise_error("wrong map");
+				if (map[map_row + 1][map_col - 1] == -1)
+					ft_raise_error("wrong map");
+				if (map[map_row + 1][map_col] == -1)
+					ft_raise_error("wrong map");
+				if (map[map_row + 1][map_col + 1] == -1)
+					ft_raise_error("wrong map");
+			}
+		}
+		printf("\n");
 	}
 	g->map.ptr = map;
 
