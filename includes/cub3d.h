@@ -42,14 +42,6 @@ enum e_textures
 	TEX_WEST
 };
 
-enum e_position
-{
-	PositionLeft,
-	PositionUp,
-	PositionRight,
-	PositionDown,
-};
-
 typedef struct s_color_srgb
 {
 	int		data;
@@ -126,13 +118,6 @@ typedef struct s_game
 	int			end_y;
 }	t_game;
 
-typedef struct s_map
-{
-	int	**ptr;
-	int	width;
-	int	height;
-}	t_map;
-
 typedef struct s_settings
 {
 	double	speed_rotate;
@@ -142,7 +127,7 @@ typedef struct s_settings
 	t_srgb	floor;
 	t_srgb	ceilling;
 	char	*paths[COUNT_TEXTURES];
-	t_map	map;
+	int		**map;
 }	t_setting;
 
 typedef struct s_env
@@ -193,7 +178,7 @@ void		ft_set_point(t_point *point, double x, double y);
 void		ft_set_point_int(t_point_int *point, int x, int y);
 
 //			render_utilities.c
-void		ft_algorithm_dda(t_game *game, const t_map *map);
+void		ft_algorithm_dda(t_game *game, const int *const *map);
 
 //			render.c
 int			ft_render_next_frame(t_env	*env);

@@ -30,19 +30,19 @@ void	ft_action_move(t_env *env)
 {
 	if (env->game.keycode == KeyUp)
 	{
-		if (!env->settings.map.ptr[(int)(env->game.pos.x + env->game.dir.x
+		if (!env->settings.map[(int)(env->game.pos.x + env->game.dir.x
 				* env->settings.speed_move)][(int)env->game.pos.y])
 			env->game.pos.x += env->game.dir.x * env->settings.speed_move;
-		if (!env->settings.map.ptr[(int)env->game.pos.x][(int)(env->game.pos.y
+		if (!env->settings.map[(int)env->game.pos.x][(int)(env->game.pos.y
 			+ env->game.dir.y * env->settings.speed_move)])
 			env->game.pos.y += env->game.dir.y * env->settings.speed_move;
 	}
 	else if (env->game.keycode == KeyDown)
 	{
-		if (!env->settings.map.ptr[(int)(env->game.pos.x - env->game.dir.x
+		if (!env->settings.map[(int)(env->game.pos.x - env->game.dir.x
 				* env->settings.speed_move)][(int)env->game.pos.y])
 			env->game.pos.x -= env->game.dir.x * env->settings.speed_move;
-		if (!env->settings.map.ptr[(int)env->game.pos.x][(int)(env->game.pos.y
+		if (!env->settings.map[(int)env->game.pos.x][(int)(env->game.pos.y
 			- env->game.dir.y * env->settings.speed_move)])
 			env->game.pos.y -= env->game.dir.y * env->settings.speed_move;
 	}

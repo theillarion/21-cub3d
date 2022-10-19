@@ -9,13 +9,13 @@ extern int temp_map[MAP_WIDTH][MAP_HEIGHT];
 bool ft_temp_fill_settings(t_setting	*settings)
 {
 	int i;
-
+	int width;
+	int height;
 	if (settings == NULL)
 		return (false);
 	settings->speed_move = SPEED_MOVE;
 	settings->speed_rotate = SPEED_ROTATE;
-	settings->position.x = POS_X;
-	settings->position.y = POS_Y;
+	ft_set_point(&settings->position, POS_X, POS_Y);
 	settings->direction = NORTH;
 	settings->floor = ft_srgb_create(0x0, 0xAB, 0x9F, 0x00);
 	settings->ceilling = ft_srgb_create(0x0, 0x0, 0x73, 0xBF);
@@ -23,14 +23,14 @@ bool ft_temp_fill_settings(t_setting	*settings)
 	settings->paths[TEX_EAST] = ft_strdup("textures/bluestone.xpm");
 	settings->paths[TEX_SOUTH] = ft_strdup("textures/redbrick.xpm");
 	settings->paths[TEX_WEST] = ft_strdup("textures/colorstone.xpm");
-	settings->map.width = MAP_WIDTH;
-	settings->map.height = MAP_HEIGHT;
-	settings->map.ptr = (int **)malloc(settings->map.height * sizeof(*settings->map.ptr));
+	width = MAP_WIDTH;
+	height = MAP_HEIGHT;
+	settings->map = (int **)malloc(height * sizeof(*settings->map));
 	i = -1;
-	while (++i < settings->map.height)
+	while (++i < height)
 	{
-		settings->map.ptr[i] = (int *)malloc(settings->map.width * sizeof(**settings->map.ptr));
-		ft_memcpy((void *)settings->map.ptr[i], (void *)temp_map[i], settings->map.width * sizeof(**settings->map.ptr));
+		settings->map[i] = (int *)malloc(width * sizeof(**settings->map));
+		ft_memcpy((void *)settings->map[i], (void *)temp_map[i], width * sizeof(**settings->map));
 	}
 	return (true);
 }
@@ -46,7 +46,7 @@ int	main(int argc, char	**argv)
 	{
 		printf("Filling error\n");
 		ft_success(&env);
-	}	
+	}
 	mlx_hook(env.win.ptr, KeyPress,
 		KeyPressMask, ft_event_key_press, (void *)&env);
 	mlx_hook(env.win.ptr, KeyRelease,
