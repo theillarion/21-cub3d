@@ -131,10 +131,10 @@ typedef struct s_game
 
 typedef struct s_map
 {
-	int		**ptr;
-	int		width;
-	int		height;
-	enum	e_position start_pos;
+	int				**ptr;
+	int				width;
+	int				height;
+	enum e_position	start_pos;
 }	t_map;
 
 typedef struct s_settings
@@ -158,59 +158,80 @@ typedef struct s_env
 	t_setting	settings;
 }	t_env;
 
-//			action.c
-void		ft_rotate(t_point *dir, t_point *plane, double speed);
-void		ft_action_rotate(t_env *env);
-void		ft_action_move(t_env *env);
+//		action.c
+void	ft_rotate(t_point *dir, t_point *plane, double speed);
+void	ft_action_rotate(t_env *env);
+void	ft_action_move(t_env *env);
 
-//			draw.c
-void		ft_draw_canvas(t_env	*env);
+//		draw.c
+void	ft_draw_canvas(t_env	*env);
 
-//			events.c
-int			ft_event_key_press(int keycode, t_env	*env);
-int			ft_event_key_release(int keycode, t_env	*env);
+//		events.c
+int		ft_event_key_press(int keycode, t_env	*env);
+int		ft_event_key_release(int keycode, t_env	*env);
 
-//			exit.c
-int			ft_success(t_env	*env);
+//		exit.c
+int		ft_success(t_env	*env);
 
-//			fill.c
-bool		ft_fill(t_env	*env);
+//		fill.c
+bool	ft_fill(t_env	*env);
 
-//			image_utilities.c
-void		ft_set_data_image(t_data	*data);
+//		image_utilities.c
+void	ft_set_data_image(t_data	*data);
 
-//			init.c
-bool		ft_init(t_env *env);
+//		init.c
+bool	ft_init(t_env *env);
 
-//			main.c
-int			main(int argc, char	**argv);
+//		main.c
+int		main(int argc, char	**argv);
 
-//			mlx_utilities.c
-bool		ft_create_mlx(t_mlx	*mlx);
-bool		ft_create_window(const t_mlx *mlx, t_window	*win, char *name);
-void		ft_mlx_pixel_put(t_data *data, int x, int y, int color);
-int			ft_get_pixel(char *data, int x, int opp, bool byte_order);
-void		ft_set_color_pixels(void *ptr, t_image	*image);
+//		mlx_utilities.c
+bool	ft_create_mlx(t_mlx	*mlx);
+bool	ft_create_window(const t_mlx *mlx, t_window	*win, char *name);
+void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		ft_get_pixel(char *data, int x, int opp, bool byte_order);
+void	ft_set_color_pixels(void *ptr, t_image	*image);
 
-//			point_utilities.c
-void		ft_set_point(t_point *point, double x, double y);
-void		ft_set_point_int(t_point_int *point, int x, int y);
+//		point_utilities.c
+void	ft_set_point(t_point *point, double x, double y);
+void	ft_set_point_int(t_point_int *point, int x, int y);
 
-//			render_utilities.c
-void		ft_algorithm_dda(t_game *game, const t_map *map);
+//		render_utilities.c
+void	ft_algorithm_dda(t_game *game, const t_map *map);
 
-//			render.c
-int			ft_render_next_frame(t_env	*env);
+//		render.c
+int		ft_render_next_frame(t_env	*env);
 
-//			srgb_utilities.c
-t_srgb		ft_srgb_create(int s, int r, int g, int b);
-t_srgb		ft_srgb_create_raw(int raw_color);
-void		ft_srgb_set_raw(t_srgb *color, int bits);
+//		srgb_utilities.c
+t_srgb	ft_srgb_create(int s, int r, int g, int b);
+t_srgb	ft_srgb_create_raw(int raw_color);
+void	ft_srgb_set_raw(t_srgb *color, int bits);
 
 // todo replace buffer_size
 # define BUFFER_SIZE 4
-char		*get_next_line(int fd);
+char	*get_next_line(int fd);
 
-void		read_map(char *map_path, t_setting *g);
+void	read_scene(char *map_path, t_setting *g);
+
+int		ft_isspace(int c);
+int		skip_ws(char **str);
+void	go_to_sym(const char *string, int *skip, char s);
+
+char	*ft_strjoin_with_free(char *str1, char *str2, int free_1, int free_2);
+int		**allocate_map(const t_setting *g);
+
+void	map_is_closed(t_setting *g, int *const *m);
+
+int		ft_raise_error(char *str);
+void	map_error(void);
+
+int		set_path(char **path, char *string);
+int		set_rgb(t_srgb *srgb, char *string_of_map);
+
+int		fill_params(t_setting *g, char *str_of_map);
+void	check_all_params_filled(t_setting *g, int *params_filled);
+
+int		calc_map_width_height(t_setting *g, char *mapline);
+void	fill_map(t_setting *g, char *map_line, int **map);
 
 #endif
