@@ -29,8 +29,7 @@ void	set_position(t_setting *g, int **map, int *map_row, int *map_col)
 	if (g->position.x || g->position.y)
 		map_error();
 	map[*map_row][++(*map_col)] = 0;
-	g->position.x = *map_row;
-	g->position.y = *map_col;
+	ft_set_point(&g->position, *map_row, *map_col);
 }
 
 int	calc_map_width_height(t_setting *g, char *mapline)
@@ -57,8 +56,8 @@ int	calc_map_width_height(t_setting *g, char *mapline)
 	errno = 0;
 	if (last_width == -1)
 		ft_raise_error("Empty map!");
-	(*g).map.height = height + 4;
-	(*g).map.width = last_width + 2;
+	(*g).map_height = height + 4;
+	(*g).map_width = last_width + 2;
 	return (0);
 }
 
@@ -97,10 +96,10 @@ void	map_is_closed(t_setting *g, int *const *m)
 	int	c;
 
 	r = 0;
-	while (++r < (g->map.height))
+	while (++r < (g->map_height))
 	{
 		c = 0;
-		while (++c < (g->map.width))
+		while (++c < (g->map_width))
 		{
 			if (m[r][c] == 0)
 			{

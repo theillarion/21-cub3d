@@ -63,7 +63,7 @@ void	read_scene_file(t_setting *g, int map_fd)
 	free(map_line_bkp);
 	map_is_closed(g, map);
 	character_is_on_scene(g);
-	g->map.ptr = map;
+	g->map = map;
 }
 
 void	read_scene(char *map_path, t_setting *g)

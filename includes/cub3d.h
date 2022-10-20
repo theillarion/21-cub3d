@@ -36,6 +36,7 @@
 # define SOUTH M_PI
 # define WEST (M_PI / 2)
 # define EAST -WEST
+# define BUFFER_SIZE 1024
 
 enum e_textures
 {
@@ -131,6 +132,8 @@ typedef struct s_settings
 	t_srgb	ceilling;
 	char	*paths[COUNT_TEXTURES];
 	int		**map;
+	int		map_height;
+	int		map_width;
 }	t_setting;
 
 typedef struct s_env
@@ -191,8 +194,6 @@ t_srgb	ft_srgb_create(int s, int r, int g, int b);
 t_srgb	ft_srgb_create_raw(int raw_color);
 void	ft_srgb_set_raw(t_srgb *color, int bits);
 
-// todo replace buffer_size
-# define BUFFER_SIZE 4
 char	*get_next_line(int fd);
 
 void	read_scene(char *map_path, t_setting *g);

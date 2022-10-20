@@ -72,17 +72,17 @@ int	**allocate_map(const t_setting *g)
 	int	map_col;
 	int	**map;
 
-	map = malloc(sizeof(int *) * (g->map.height));
+	map = malloc(sizeof(int *) * (g->map_height));
 	if (! map)
 		return (NULL);
 	map_row = -1;
-	while (++map_row < (g->map.height))
+	while (++map_row < (g->map_height))
 	{
-		map[map_row] = malloc(sizeof(int) * (g->map.width));
+		map[map_row] = malloc(sizeof(int) * (g->map_width));
 		if (! map[map_row])
 			return (free_allocated(map, map_row));
 		map_col = -1;
-		while (++map_col < (g->map.width))
+		while (++map_col < (g->map_width))
 			map[map_row][map_col] = -1;
 	}
 	return (map);
