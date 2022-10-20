@@ -29,7 +29,7 @@ static void	ft_algorithm_dda_preparation(t_game *game, t_point *side_dist,
 	}
 }
 
-void	ft_algorithm_dda(t_game *game, const t_map *map)
+void	ft_algorithm_dda(t_game *game, const int *const *map)
 {
 	t_point	side_dist;
 	t_point	delta_dist;
@@ -49,7 +49,7 @@ void	ft_algorithm_dda(t_game *game, const t_map *map)
 			game->map.y += game->step.y;
 			game->side = true;
 		}
-		if (map->ptr[game->map.x][game->map.y])
+		if (map[game->map.x][game->map.y])
 			break ;
 	}	
 	if (game->side == 0)

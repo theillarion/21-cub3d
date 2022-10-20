@@ -80,7 +80,7 @@ int	ft_render_next_frame(t_env	*env)
 			* env->game.camera_x, env->game.dir.y + env->game.plane.y
 			* env->game.camera_x);
 		ft_set_point_int(&env->game.map, env->game.pos.x, env->game.pos.y);
-		ft_algorithm_dda(&env->game, &env->settings.map);
+		ft_algorithm_dda(&env->game, (const int *const *)env->settings.map);
 		ft_calc_line(&env->game, &env->win);
 		ft_select_texture(&env->game);
 		ft_fill_canvas(env, x);
