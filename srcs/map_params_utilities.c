@@ -1,28 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_params_utilities.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltowelie <ltowelie@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/20 12:55:03 by ltowelie          #+#    #+#             */
+/*   Updated: 2022/10/20 12:55:04 by ltowelie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
+
+int	skip_ws_check_after(const char *string, char **tmp, int *len, int *skipped)
+{
+	if ((*len))
+	{
+		(*tmp) = (char *)string + (*len);
+		(*skipped) = skip_ws((tmp));
+		if ((*skipped))
+		{
+			(*len) += (*skipped);
+			if (*(*tmp) != '\n')
+			{
+				(*len) = -1;
+				return (-1);
+			}
+		}
+	}
+	return (0);
+}
 
 int	set_path(char **path, char *string)
 {
-	int	len;
+	int		len;
+	char	*tmp;
+	int		skipped;
 
 	len = 0;
+	skipped = 0;
 	while (string[len])
 	{
-		if (ft_isspace(string[len])
-			&& string[len] != '\n' && string[len + 1] != '\n')
-			return (-1);
-		if (string[len] == '"')
-			go_to_sym(string, &len, '"');
-		else if (len != -1 && string[len] == '\'')
-			go_to_sym(string, &len, '\'');
-		if (len == -1)
-			return (-1);
-		if (string[len] == '\n')
+		if (skip_ws_check_after(string, &tmp, &len, &skipped) == -1)
+			break ;
+		if ((len && (string[len] == '"' || string[len] == '\'')))
+		{
+			len = -1;
+			break ;
+		}
+		if (handle_quotes(&string, &len))
+			break ;
+		if (len == -1 || string[len] == '\n')
 			break ;
 		len++;
 	}
-	if (! len)
+	if (! len || len == -1)
 		return (-1);
-	*path = ft_substr(string, 0, len);
+	*path = ft_substr(string, 0, len - skipped);
 	return (0);
 }
 
@@ -53,35 +87,27 @@ int	set_rgb(t_srgb *srgb, char *string_of_map)
 {
 	int		len;
 	char	*tmp;
-	char	*r;
-	char	*g;
-	char	*b;
+	char	*c[3];
 
-	len = 0;
-	tmp = NULL;
-	r = NULL;
-	g = NULL;
-	b = NULL;
+	initiate_color_params(&tmp, c, &len);
 	while (string_of_map[len] && ft_isdigit(string_of_map[len]))
-		add_cdigit(string_of_map, &len, &tmp, &r);
-	if (check_zap(&tmp, &len, string_of_map, r))
+		add_cdigit(string_of_map, &len, &tmp, &(*c));
+	if (check_zap(&tmp, &len, string_of_map, c[0]))
 		return (-1);
 	while (string_of_map[len] && ft_isdigit(string_of_map[len]))
-		add_cdigit(string_of_map, &len, &tmp, &g);
-	if (check_zap(&tmp, &len, string_of_map, g))
+		add_cdigit(string_of_map, &len, &tmp, &(*(c + 1)));
+	if (check_zap(&tmp, &len, string_of_map, c[1]))
 		return (-1);
 	while (string_of_map[len] && ft_isdigit(string_of_map[len]))
-		add_cdigit(string_of_map, &len, &tmp, &b);
-	if (ft_atoi(b) > 255)
+		add_cdigit(string_of_map, &len, &tmp, &(*(c + 2)));
+	if (ft_atoi(c[2]) > 255)
 		return (-1);
 	tmp = string_of_map + len;
 	if (tmp)
 		len += skip_ws(&tmp);
 	if (string_of_map[len] != '\n')
 		return (-1);
-	*srgb = ft_srgb_create(0, ft_atoi(r), ft_atoi(g), ft_atoi(b));
-	free(r);
-	free(g);
-	free(b);
+	*srgb = ft_srgb_create(0, ft_atoi(c[0]), ft_atoi(c[1]), ft_atoi(c[2]));
+	free_colors(c);
 	return (0);
 }

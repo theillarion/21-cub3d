@@ -216,6 +216,7 @@ void	read_scene(char *map_path, t_setting *g);
 int		ft_isspace(int c);
 int		skip_ws(char **str);
 void	go_to_sym(const char *string, int *skip, char s);
+int		handle_quotes(char **string, int *len);
 
 char	*ft_strjoin_with_free(char *str1, char *str2, int free_1, int free_2);
 int		**allocate_map(const t_setting *g);
@@ -232,6 +233,9 @@ int		fill_params(t_setting *g, char *str_of_map);
 void	check_all_params_filled(t_setting *g, int *params_filled);
 
 int		calc_map_width_height(t_setting *g, char *mapline);
-void	fill_map(t_setting *g, char *map_line, int **map);
+void	fill_map(t_setting *g, char *ml, int **map);
+
+void	initiate_color_params(char **tmp, char **c, int *len);
+void	free_colors(char *const *c);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_utilities.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltowelie <ltowelie@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/20 12:55:11 by ltowelie          #+#    #+#             */
+/*   Updated: 2022/10/20 12:55:12 by ltowelie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	set_direction(t_setting *g, const char *map_line)
@@ -12,13 +24,13 @@ void	set_direction(t_setting *g, const char *map_line)
 		g->direction = EAST;
 }
 
-void	set_position(t_setting *g, int **map, int map_row, int map_col)
+void	set_position(t_setting *g, int **map, int *map_row, int *map_col)
 {
 	if (g->position.x || g->position.y)
 		map_error();
-	map[map_row][++map_col] = 0;
-	g->position.x = map_row;
-	g->position.y = map_col;
+	map[*map_row][++(*map_col)] = 0;
+	g->position.x = *map_row;
+	g->position.y = *map_col;
 }
 
 int	calc_map_width_height(t_setting *g, char *mapline)
@@ -50,33 +62,32 @@ int	calc_map_width_height(t_setting *g, char *mapline)
 	return (0);
 }
 
-void	fill_map(t_setting *g, char *map_line, int **map)
+void	fill_map(t_setting *g, char *ml, int **map)
 {
 	int	map_row;
 	int	map_col;
 
 	map_row = 1;
-	while (map_line && *map_line && ++map_row)
+	while (ml && *ml && ++map_row)
 	{
 		map_col = 1;
-		while (map_line && *map_line && *map_line != '\n')
+		while (ml && *ml && *ml != '\n')
 		{
-			if (*map_line == '0' || *map_line == '1' )
-				map[map_row][++map_col] = (int) *map_line - 48;
-			else if (*map_line == ' ')
+			if (*ml == '0' || *ml == '1' )
+				map[map_row][++map_col] = (int) *ml - 48;
+			else if (*ml == ' ')
 				map[map_row][++map_col] = -1;
-			else if (*map_line == 'N' || *map_line == 'S'
-				|| *map_line == 'W' || *map_line == 'E')
+			else if (*ml == 'N' || *ml == 'S' || *ml == 'W' || *ml == 'E')
 			{
-				set_position(g, map, map_row, map_col);
-				set_direction(g, map_line);
+				set_position(g, map, &map_row, &map_col);
+				set_direction(g, ml);
 			}
 			else
 				map_error();
-			map_line++;
+			ml++;
 		}
-		if (map_line && *map_line)
-			map_line++;
+		if (ml && *ml)
+			ml++;
 	}
 }
 

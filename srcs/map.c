@@ -12,9 +12,6 @@
 
 #include "cub3d.h"
 
-//todo memory handling
-//todo checking file extention of map
-
 void	read_param_and_map(t_setting *g, int fd, char **map_line, int *p_filled)
 {
 	char	*current_line;
@@ -35,6 +32,12 @@ void	read_param_and_map(t_setting *g, int fd, char **map_line, int *p_filled)
 		}
 		current_line = get_next_line(fd);
 	}
+}
+
+void	character_is_on_scene(t_setting *g)
+{
+	if (! g->position.x && ! g->position.y)
+		map_error();
 }
 
 void	read_scene_file(t_setting *g, int map_fd)
@@ -59,6 +62,7 @@ void	read_scene_file(t_setting *g, int map_fd)
 	fill_map(g, map_line, map);
 	free(map_line_bkp);
 	map_is_closed(g, map);
+	character_is_on_scene(g);
 	g->map.ptr = map;
 }
 
