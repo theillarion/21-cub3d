@@ -103,13 +103,11 @@ void	map_is_closed(t_setting *g, int *const *m)
 		{
 			if (m[r][c] == 0)
 			{
-				if (m[r - 1][c - 1] == -1 || m[r - 1][c] == -1
-					|| m[r - 1][c + 1] == -1)
+				if (m[r - 1][c] == -1)
 					map_error();
 				if (m[r][c - 1] == -1 || m[r][c + 1] == -1)
 					map_error();
-				if (m[r + 1][c - 1] == -1 || m[r + 1][c] == -1
-					|| m[r + 1][c + 1] == -1)
+				if (m[r + 1][c] == -1)
 					map_error();
 			}
 		}
