@@ -102,7 +102,6 @@ void	map_is_closed(t_setting *g, int *const *m)
 		c = 0;
 		while (++c < (g->map.width))
 		{
-			printf("%2d", m[r][c]);
 			if (m[r][c] == 0)
 			{
 				if (m[r - 1][c - 1] == -1 || m[r - 1][c] == -1
@@ -115,6 +114,5 @@ void	map_is_closed(t_setting *g, int *const *m)
 					map_error();
 			}
 		}
-		printf("\n");
 	}
 }
