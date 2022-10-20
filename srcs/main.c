@@ -5,7 +5,10 @@ int	main(int argc, char	**argv)
 	t_env	env;
 
 	if (argc != 2)
-		return (1);
+	{
+		printf("Error: wrong number of arguments\n");
+		return (EXIT_FAILURE);
+	}
 	ft_init(&env);
 	read_scene(argv[1], &env.settings);
 	env.settings.speed_move = SPEED_MOVE;
