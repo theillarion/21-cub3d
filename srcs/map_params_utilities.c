@@ -70,7 +70,7 @@ void	add_cdigit(const char *string_of_map, int *len, char **tmp, char **r)
 int	check_zap(char **tmp, int *len, char *string_of_map, char *col)
 {
 	*tmp = string_of_map + *len;
-	if (ft_atoi(col) > 255)
+	if (ft_atoi(col) > 255 || ft_atoi(col) < 0)
 		return (-1);
 	if (*tmp)
 	{
@@ -92,7 +92,7 @@ int	set_rgb(t_srgb *srgb, char *string_of_map)
 	initiate_color_params(&tmp, c, &len);
 	while (string_of_map[len] && ft_isdigit(string_of_map[len]))
 		add_cdigit(string_of_map, &len, &tmp, &(*c));
-	if (check_zap(&tmp, &len, string_of_map, c[0]))
+	if (check_zap(&tmp, &len, string_of_map, c[0]) == -1)
 		return (-1);
 	while (string_of_map[len] && ft_isdigit(string_of_map[len]))
 		add_cdigit(string_of_map, &len, &tmp, &(*(c + 1)));
