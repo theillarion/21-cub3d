@@ -5,7 +5,7 @@ DIR_SRCS		=	srcs/
 DIR_HEADERS		=	includes/	
 
 SRCS		=	${addprefix $(DIR_SRCS),\
-				action.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c point_utilities.c render_utilities.c render.c srgb_utilities.c temp_map.c\
+				action.c destroy.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c point_utilities.c render_utilities.c render.c srgb_utilities.c temp_map.c\
 				}
 HEADERS		=	${addprefix $(DIR_HEADERS),\
 				cub3d.h keys.h\
