@@ -3,13 +3,14 @@
 void	ft_success(t_env *env)
 {
 	ft_destroy(env);
-	ft_putendl_fd("Game over\n", STDOUT_FILENO);
+	ft_putendl_fd("Game over", STDOUT_FILENO);
 	exit(EXIT_SUCCESS);
 }
 
 void	ft_failure(t_env	*env, const char	*msg)
 {
 	ft_destroy(env);
+	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
