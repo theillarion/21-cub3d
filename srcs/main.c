@@ -42,17 +42,16 @@ int	main(int argc, char	**argv)
 	(void)argc;
 	(void)argv;
 	ft_init(&env);
-	if (!ft_temp_fill_settings(&env.settings) || !ft_fill(&env))
-	{
-		printf("Filling error\n");
-		ft_success(&env);
-	}
+	if (!ft_temp_fill_settings(&env.settings))
+		ft_failure(&env, "temp filling settings");
+	if (!ft_fill(&env))
+		ft_failure(&env, "filling");
 	mlx_hook(env.win.ptr, KeyPress,
-		KeyPressMask, ft_event_key_press, (void *)&env);
+		KeyPressMask, &ft_event_key_press, (void *)&env);
 	mlx_hook(env.win.ptr, KeyRelease,
-		KeyReleaseMask, ft_event_key_release, NULL);
+		KeyReleaseMask, &ft_event_key_release, (void *)&env);
 	mlx_hook(env.win.ptr, DestroyNotify,
-		ButtonReleaseMask, ft_success, NULL);
+		ButtonReleaseMask, &ft_event_exit, (void *)&env);
 	mlx_loop_hook(env.mlx.ptr, &ft_render_next_frame, (void *)&env);
 	mlx_loop(env.mlx.ptr);
 	return (0);
