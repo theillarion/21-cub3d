@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_utilities.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/22 20:14:13 by illarion          #+#    #+#             */
+/*   Updated: 2022/10/22 20:30:37 by illarion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 bool	ft_create_mlx(t_mlx	*mlx)
@@ -20,7 +32,7 @@ bool	ft_create_mlx(t_mlx	*mlx)
 
 bool	ft_create_window(const t_mlx *mlx, t_window	*win, char *name)
 {
-	int i;
+	int	i;
 
 	if (!mlx || !win || win->width <= 0 || win->height <= 0)
 		return (false);
@@ -29,18 +41,20 @@ bool	ft_create_window(const t_mlx *mlx, t_window	*win, char *name)
 	win->canvas.height = win->height;
 	win->canvas.data.img = mlx_new_image(mlx->ptr, win->width, win->height);
 	ft_set_data_image(&win->canvas.data);
-	win->canvas.pixels = (t_srgb **)malloc(win->canvas.height
-		* sizeof(*win->canvas.pixels));
+	win->canvas.pixels = (t_srgb **)malloc((win->canvas.height + 1)
+			* sizeof(*win->canvas.pixels));
 	if (!win->ptr || !win->canvas.data.img || !win->canvas.data.addr
 		|| !win->canvas.pixels)
 		return (false);
 	i = -1;
 	while (++i < win->canvas.height)
 	{
-		win->canvas.pixels[i] = (t_srgb *)malloc(win->canvas.width * sizeof(**win->canvas.pixels));
+		win->canvas.pixels[i] = (t_srgb *)malloc(win->canvas.width
+				* sizeof(**win->canvas.pixels));
 		if (!win->canvas.pixels[i])
 			return (false);
 	}
+	win->canvas.pixels[i] = NULL;
 	return (true);
 }
 
@@ -63,10 +77,10 @@ int	ft_get_pixel(char *data, int x, int opp, bool byte_order)
 	{
 		if (byte_order)
 			result |= ((((int)*(data + x * opp + dec)) & 0xFF)
-				<<  (dec * 8));
+					<< (dec * 8));
 		else
 			result |= ((((int)*(data + x * opp + opp - dec - 1)) & 0xFF)
-				<<  (opp - dec - 1) * 8);
+					<< (opp - dec - 1) * 8);
 	}
 	return (result);
 }
@@ -80,22 +94,22 @@ void	ft_set_color_pixels(void *ptr, t_image	*image)
 
 	img = *(t_img *)ptr;
 	data = img.data;
-	image->pixels = (t_srgb **)malloc(img.height * sizeof(*image->pixels));
+	image->pixels = (t_srgb **)malloc((img.height + 1)
+			* sizeof(*image->pixels));
 	image->width = img.width;
 	image->height = img.height;
-	i = 0;
-	while (i < img.height)
+	i = -1;
+	while (++i < img.height)
 	{
-		j = 0;
 		image->pixels[i] = (t_srgb *)malloc(img.width
 				* sizeof(**image->pixels));
-		while (j < img.width)
+		j = -1;
+		while (++j < img.width)
 		{
 			ft_srgb_set_raw(&image->pixels[i][j],
 				ft_get_pixel(data, j, img.bpp / 8, img.image->byte_order));
-			++j;
 		}
 		data += img.size_line;
-		++i;
 	}
+	image->pixels[i] = NULL;
 }

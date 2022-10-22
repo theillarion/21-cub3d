@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srgb_utilities.c                                   :+:      :+:    :+:   */
+/*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 20:14:21 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/22 20:14:22 by illarion         ###   ########.fr       */
+/*   Created: 2022/10/22 20:31:37 by illarion          #+#    #+#             */
+/*   Updated: 2022/10/22 20:31:37 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_srgb	ft_srgb_create(int s, int r, int g, int b)
+void	ft_foreach(void **array, void (*func)(void *))
 {
-	t_srgb	result;
-
-	result.data = (s << 24) | (r << 16) | (g << 8) | b;
-	return (result);
+	if (!array || !func)
+		return ;
+	while (*array)
+		(*func)(*(array++));
 }
 
-t_srgb	ft_srgb_create_raw(int raw_color)
+void	ft_smart_free(void	**address)
 {
-	t_srgb	result;
-
-	ft_srgb_set_raw(&result, raw_color);
-	return (result);
-}
-
-void	ft_srgb_set_raw(t_srgb *color, int bits)
-{
-	color->data = bits;
+	if (address == NULL || *address == NULL)
+		return ;
+	free(*address);
+	*address = NULL;
 }
