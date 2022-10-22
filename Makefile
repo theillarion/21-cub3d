@@ -76,7 +76,7 @@ $(OBJS_DIR)/%_debug.o	:	$(SRCS_DIR)/%.c $(HEADERS)
 
 print-%  		: ; @echo $* = $($*)
 
-all				:	$(NAME) $(NAME_D)
+all				:	$(NAME)
 debug			:	$(NAME_D)
 bonus			:	all
 
@@ -124,3 +124,8 @@ fclean			:	clean
 re				:	fclean all
 					@printf "$(COLOR_LCYAN)rebuild all$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
+
+norm			:
+					@norminette $(addprefix #(SRCS_DIR)/,$(SRCS)) $(HEADERS)
+					@printf "$(COLOR_LCYAN)norminette$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+					@printf "ready $(COLOR_LYELLOW)$(NAME_S)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
