@@ -1,22 +1,27 @@
-NAME			=	cub3d
-NAME_D			=	$(NAME)_debug
+NAME		=	cub3d
+NAME_D		=	$(NAME)_debug
 
-DIR_SRCS		=	srcs/
-DIR_HEADERS		=	includes/	
+CC 			=	cc
+CC_FLAGS	=	-Wall -Werror -Wextra
+CC_FLAGS_D	=	-g
 
-SRCS		=	${addprefix $(DIR_SRCS),\
-				action.c destroy.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c point_utilities.c render_utilities.c render.c srgb_utilities.c temp_map.c\
-				}
-HEADERS		=	${addprefix $(DIR_HEADERS),\
-				cub3d.h keys.h\
-				}
+LINK		=	
 
-OBJS			=	${SRCS:%.c=%.o}
-OBJS_D			=	${SRCS:%.c=%_debug.o}
+SRCS_DIR	=	srcs
+SRCS		=	action.c destroy.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c \
+				point_utilities.c render_utilities.c render.c srgb_utilities.c temp_fill_settings.c utilities.c
 
-CC 				=	cc
-CC_FLAGS		=	-Wall -Werror -Wextra
-CC_FLAGS_D		=	-g
+HEADERS_DIR	=	includes
+ifeq (${HEADERS_DIR},)
+        HEADERS_DIR = ./
+endif
+HEADERS		=	$(addprefix $(HEADERS_DIR)/,\
+					cub3d.h keys.h\
+				)
+
+OBJS_DIR		=	objs
+OBJS			=	$(addprefix $(OBJS_DIR)/,$(SRCS:%.c=%.o))
+OBJS_D			=	$(addprefix $(OBJS_DIR)/,$(SRCS:%.c=%_debug.o))
 
 LIBFT_NAME		=	libft.a
 LIBFT_NAME_D	=	libft_debug.a
@@ -57,38 +62,34 @@ COLOR_LYELLOW	=	\033[93m
 COLOR_LCYAN		=	\033[96m
 NEWLINE			=	\n
 
-%.o				:	%.c $(HEADER)
-					@$(CC) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
-					@printf "$(COLOR_LCYAN)build object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
-					@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
+$(OBJS_DIR)/%.o			:	$(SRCS_DIR)/%.c $(HEADERS)
+							@mkdir -p $(OBJS_DIR) 
+							@$(CC) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
+							@printf "$(COLOR_LCYAN)build object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+							@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
 
-%_debug.o		:	%.c $(HEADER)
-					@$(CC) $(CC_FLAGS_D) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
-					@printf "$(COLOR_LCYAN)build object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
-					@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
+$(OBJS_DIR)/%_debug.o	:	$(SRCS_DIR)/%.c $(HEADERS)
+							@$(CC) $(CC_FLAGS_D) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
+							@printf "$(COLOR_LCYAN)build debug object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+							@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
 
 print-%  		: ; @echo $* = $($*)
 
-all				:	$(NAME)
+all				:	$(NAME) $(NAME_D)
 debug			:	$(NAME_D)
 bonus			:	all
 
 .PHONY			:	all debug bonus clean fclean re
 
-$(NAME)			:	$(LIBMLX) $(LIBFT) $(HEADER_MLX) $(OBJS)
-					@$(CC) $(INCLUDES) $(OBJS) $(CC_FLAGS_LINK) -o $(NAME)
-					@printf "$(COLOR_LCYAN)build$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+$(NAME)			:	$(LIBMLX) $(LIBFT) $(OBJS)
+					@$(CC) $(INCLUDES) $(LINK) $(OBJS) $(CC_FLAGS_LINK) -o $(NAME)
+					@printf "$(COLOR_LCYAN)linking objects$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
 
-$(HEADER_MLX)	:
-					@cp $(LIBMLX_PATH)/$(LIBMLX_NAME_S).h $(HEADER_MLX)
-					@printf "$(COLOR_LCYAN)cp $(LIBMLX_PATH)/$(LIBMLX_NAME_S).h$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
-					@printf "ready $(COLOR_LYELLOW)$(HEADER_MLX)$(NOCOLOR)$(NEWLINE)"
-
-$(NAME_D)		:	$(LIBMLX) $(LIBFT_D) $(HEADER_MLX) $(OBJS_D)
-					@$(CC) $(INCLUDES) $(OBJS_D) $(CC_FLAGS_LINK_D) -o $(NAME_D)
-					@printf "$(COLOR_LCYAN)build debug$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
-					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
+$(NAME_D)		:	$(LIBMLX) $(LIBFT_D) $(OBJS_D)
+					@$(CC) $(INCLUDES) $(LINK) $(OBJS_D) $(CC_FLAGS_LINK_D) -o $(NAME_D)
+					@printf "$(COLOR_LCYAN)linking debug objects$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+					@printf "ready $(COLOR_LYELLOW)$(NAME_D)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
 
 $(LIBFT)		:
 					@printf "$(COLOR_LCYAN)build $(LIBFT_NAME)$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
@@ -114,11 +115,11 @@ clean			:
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
 
 fclean			:	clean 
-					@$(RM) $(NAME) $(NAME_D) $(HEADER_MLX)
+					@$(RM) $(NAME) $(NAME_D)
 					@$(MAKE) -s fclean -C $(LIBFT_PATH)
-					@printf "$(COLOR_LCYAN)$@$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+					@printf "$(COLOR_LCYAN)full clean$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
 
 re				:	fclean all
-					@printf "$(COLOR_LCYAN)$@$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+					@printf "$(COLOR_LCYAN)rebuild all$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
