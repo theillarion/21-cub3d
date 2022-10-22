@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_common_utilities.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ltowelie <ltowelie@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:54:56 by ltowelie          #+#    #+#             */
-/*   Updated: 2022/10/20 12:54:57 by ltowelie         ###   ########.fr       */
+/*   Updated: 2022/10/22 17:26:32 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	**allocate_map(const t_setting *g)
 	int	map_col;
 	int	**map;
 
-	map = malloc(sizeof(int *) * (g->map_height));
+	map = malloc(sizeof(int *) * (g->map_height + 1));
 	if (! map)
 		return (NULL);
 	map_row = -1;
@@ -85,5 +85,6 @@ int	**allocate_map(const t_setting *g)
 		while (++map_col < (g->map_width))
 			map[map_row][map_col] = -1;
 	}
+	map[map_row] = NULL;
 	return (map);
 }
