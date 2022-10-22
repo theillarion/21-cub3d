@@ -4,10 +4,14 @@ NAME_D			=	$(NAME)_debug
 DIR_SRCS		=	srcs/
 DIR_HEADERS		=	includes/	
 
+ifeq (${DIR_HEADERS},)
+        DIR_HEADERS = ./
+endif
+
 SRCS		=	${addprefix $(DIR_SRCS),\
 				action.c destroy.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c point_utilities.c render_utilities.c \
 				render.c srgb_utilities.c temp_map.c map.c get_next_line.c map_parse_utilities.c map_utilities.c map_params_utilities.c map_params.c \
-				map_common_utilities.c map_params_color_utilities.c \
+				map_common_utilities.c map_params_color_utilities.c utilities.c\
 				}
 HEADERS		=	${addprefix $(DIR_HEADERS),\
 				cub3d.h keys.h\
@@ -19,6 +23,8 @@ OBJS_D			=	${SRCS:%.c=%_debug.o}
 CC 				=	cc
 CC_FLAGS		=	-Wall -Werror -Wextra
 CC_FLAGS_D		=	-g
+
+LINK			=
 
 LIBFT_NAME		=	libft.a
 LIBFT_NAME_D	=	libft_debug.a
@@ -71,14 +77,14 @@ NEWLINE			=	\n
 
 print-%  		: ; @echo $* = $($*)
 
-all				:	$(NAME)
+all				:	$(NAME) $(NAME_D)
 debug			:	$(NAME_D)
 bonus			:	all
 
 .PHONY			:	all debug bonus clean fclean re
 
 $(NAME)			:	$(LIBMLX) $(LIBFT) $(HEADER_MLX) $(OBJS)
-					@$(CC) $(INCLUDES) $(OBJS) $(CC_FLAGS_LINK) -o $(NAME)
+					@$(CC) $(INCLUDES) $(LINK) $(OBJS) $(CC_FLAGS_LINK) -o $(NAME)
 					@printf "$(COLOR_LCYAN)build$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
 
@@ -88,7 +94,7 @@ $(HEADER_MLX)	:
 					@printf "ready $(COLOR_LYELLOW)$(HEADER_MLX)$(NOCOLOR)$(NEWLINE)"
 
 $(NAME_D)		:	$(LIBMLX) $(LIBFT_D) $(HEADER_MLX) $(OBJS_D)
-					@$(CC) $(INCLUDES) $(OBJS_D) $(CC_FLAGS_LINK_D) -o $(NAME_D)
+					@$(CC) $(INCLUDES) $(LINK) $(OBJS_D) $(CC_FLAGS_LINK_D) -o $(NAME_D)
 					@printf "$(COLOR_LCYAN)build debug$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
 
