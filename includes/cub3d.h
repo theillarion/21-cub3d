@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/22 20:32:23 by illarion          #+#    #+#             */
+/*   Updated: 2022/10/22 20:35:23 by illarion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -17,8 +29,6 @@
 
 # define SCREEN_WIDTH 640
 # define SCREEN_HEIGHT 480
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
 
 # define COUNT_TEXTURES 4
 
@@ -32,11 +42,11 @@
 # define DEFAULT_PLANE_X 0.f
 # define DEFAULT_PLANE_Y 0.66f
 
-# define SPEED_ROTATE M_PI / 20
+# define SPEED_ROTATE 0.15707963267f
 # define SPEED_MOVE 0.5f
 # define NORTH 0
 # define SOUTH M_PI
-# define WEST (M_PI / 2)
+# define WEST 1.57079632679f
 # define EAST -WEST
 # define BUFFER_SIZE 1024
 
@@ -234,5 +244,12 @@ void	free_colors(char *const *c);
 //		utilities.c
 void	ft_foreach(void **array, void (*func)(void *));
 void	ft_smart_free(void	**address);
+
+//			temp_fill_settings.c
+bool		ft_temp_fill_settings(t_setting	*settings);
+
+//			utilities.c
+void		ft_foreach(void **array, void (*func)(void *));
+void		ft_smart_free(void	**address);
 
 #endif

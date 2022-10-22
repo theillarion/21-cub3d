@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/22 20:14:19 by illarion          #+#    #+#             */
+/*   Updated: 2022/10/22 20:46:28 by illarion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	ft_calc_line(t_game *game, t_window *win)
@@ -68,11 +80,11 @@ int	ft_render_next_frame(t_env	*env)
 {
 	int	x;
 
-	x = -1;
 	if (env->game.keycode == KeyLeft || env->game.keycode == KeyRight)
 		ft_action_rotate(env);
 	else if (env->game.keycode == KeyUp || env->game.keycode == KeyDown)
 		ft_action_move(env);
+	x = -1;
 	while (++x < env->win.width)
 	{
 		env->game.camera_x = 2 * x / (double)env->win.width - 1;
@@ -86,5 +98,5 @@ int	ft_render_next_frame(t_env	*env)
 		ft_fill_canvas(env, x);
 	}
 	ft_draw_canvas(env);
-	return (1);
+	return (EXIT_SUCCESS);
 }

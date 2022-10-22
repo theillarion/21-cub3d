@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   destroy.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/22 20:26:16 by illarion          #+#    #+#             */
+/*   Updated: 2022/10/22 20:54:05 by illarion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 #ifdef CURRENT_OS_LINUX
 
-void	ft_destroy_display(void	**ptr)
+static void	ft_destroy_display(void	**ptr)
 {
 	mlx_destroy_display(*ptr);
 	*ptr = NULL;
 }
 #else
 
-void	ft_destroy_display(void	**ptr)
+static void	ft_destroy_display(void	**ptr)
 {
 	(void)ptr;
 }
 #endif
 
-void	ft_destroy_images(t_env	*env)
+static void	ft_destroy_images(t_env	*env)
 {
 	int	i;
 
@@ -42,7 +54,7 @@ static void	ft_destroy_paths(t_setting	*settings)
 void	ft_destroy(t_env	*env)
 {
 	if (!env || !env->mlx.ptr)
-		return;
+		return ;
 	ft_destroy_images(env);
 	ft_foreach((void **)env->win.canvas.pixels, &free);
 	ft_smart_free((void **)&env->win.canvas.pixels);

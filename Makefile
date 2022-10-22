@@ -1,5 +1,5 @@
-NAME			=	cub3d
-NAME_D			=	$(NAME)_debug
+NAME		=	cub3d
+NAME_D		=	$(NAME)_debug
 
 CC 				=	cc
 CC_FLAGS		=	-Wall -Werror -Wextra

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/22 20:14:06 by illarion          #+#    #+#             */
+/*   Updated: 2022/10/22 20:27:50 by illarion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static bool	ft_fill_images(t_env	*env)
@@ -8,8 +20,8 @@ static bool	ft_fill_images(t_env	*env)
 	while (i < COUNT_TEXTURES)
 	{
 		env->images[i].data.img = mlx_xpm_file_to_image(env->mlx.ptr,
-			env->settings.paths[i], &env->images[i].width,
-			&env->images[i].height);
+				env->settings.paths[i], &env->images[i].width,
+				&env->images[i].height);
 		if (!env->images[i].data.img || env->images[i].width <= 0
 			|| env->images[i].height <= 0)
 			return (false);

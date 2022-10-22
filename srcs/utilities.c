@@ -1,3 +1,16 @@
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utilities.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/22 20:31:37 by illarion          #+#    #+#             */
+/*   Updated: 2022/10/22 20:31:37 by illarion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	ft_foreach(void **array, void (*func)(void *))
@@ -15,16 +28,3 @@ void	ft_smart_free(void	**address)
 	free(*address);
 	*address = NULL;
 }
-
-/*
-void	ft_foreach(void **array, unsigned int size, void (*func)(void *))
-{
-	if (!array || !func)
-		return ;
-	while (*array)
-	{
-		(*func)(*(array));
-		array = (void *)(((unsigned char *)*array) + size);
-	}
-}
-*/
