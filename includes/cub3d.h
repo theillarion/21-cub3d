@@ -231,4 +231,8 @@ void	fill_map(t_setting *g, char *ml, int **map);
 void	initiate_color_params(char **tmp, char **c, int *len);
 void	free_colors(char *const *c);
 
+//		utilities.c
+void	ft_foreach(void **array, void (*func)(void *));
+void	ft_smart_free(void	**address);
+
 #endif
