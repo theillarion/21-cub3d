@@ -29,7 +29,7 @@ bool	ft_create_window(const t_mlx *mlx, t_window	*win, char *name)
 	win->canvas.height = win->height;
 	win->canvas.data.img = mlx_new_image(mlx->ptr, win->width, win->height);
 	ft_set_data_image(&win->canvas.data);
-	win->canvas.pixels = (t_srgb **)malloc(win->canvas.height
+	win->canvas.pixels = (t_srgb **)malloc((win->canvas.height + 1)
 		* sizeof(*win->canvas.pixels));
 	if (!win->ptr || !win->canvas.data.img || !win->canvas.data.addr
 		|| !win->canvas.pixels)
@@ -41,6 +41,7 @@ bool	ft_create_window(const t_mlx *mlx, t_window	*win, char *name)
 		if (!win->canvas.pixels[i])
 			return (false);
 	}
+	win->canvas.pixels[i] = NULL;
 	return (true);
 }
 
@@ -80,7 +81,7 @@ void	ft_set_color_pixels(void *ptr, t_image	*image)
 
 	img = *(t_img *)ptr;
 	data = img.data;
-	image->pixels = (t_srgb **)malloc(img.height * sizeof(*image->pixels));
+	image->pixels = (t_srgb **)malloc((img.height + 1) * sizeof(*image->pixels));
 	image->width = img.width;
 	image->height = img.height;
 	i = 0;
@@ -98,4 +99,5 @@ void	ft_set_color_pixels(void *ptr, t_image	*image)
 		data += img.size_line;
 		++i;
 	}
+	image->pixels[i] = NULL;
 }
