@@ -1,30 +1,28 @@
 NAME			=	cub3d
 NAME_D			=	$(NAME)_debug
 
-DIR_SRCS		=	srcs/
-DIR_HEADERS		=	includes/	
-
-ifeq (${DIR_HEADERS},)
-        DIR_HEADERS = ./
-endif
-
-SRCS			=	${addprefix $(DIR_SRCS),\
-					action.c destroy.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c point_utilities.c render_utilities.c \
-					render.c srgb_utilities.c temp_map.c map.c get_next_line.c map_parse_utilities.c map_utilities.c map_params_utilities.c map_params.c \
-					map_common_utilities.c map_params_color_utilities.c utilities.c\
-					}
-HEADERS			=	${addprefix $(DIR_HEADERS),\
-					cub3d.h keys.h\
-					}
-
-OBJS			=	${SRCS:%.c=%.o}
-OBJS_D			=	${SRCS:%.c=%_debug.o}
-
 CC 				=	cc
 CC_FLAGS		=	-Wall -Werror -Wextra
 CC_FLAGS_D		=	-g
 
-LINK			=
+LINK			=	
+
+SRCS_DIR		=	srcs
+SRCS			=	action.c destroy.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c point_utilities.c render_utilities.c \
+					render.c srgb_utilities.c temp_map.c map.c get_next_line.c map_parse_utilities.c map_utilities.c map_params_utilities.c map_params.c \
+					map_common_utilities.c map_params_color_utilities.c utilities.c
+
+HEADERS_DIR		=	includes
+ifeq (${HEADERS_DIR},)
+        HEADERS_DIR = ./
+endif
+HEADERS			=	$(addprefix $(HEADERS_DIR)/,\
+					cub3d.h keys.h\
+					)
+
+OBJS_DIR		=	objs
+OBJS			=	$(addprefix $(OBJS_DIR)/,$(SRCS:%.c=%.o))
+OBJS_D			=	$(addprefix $(OBJS_DIR)/,$(SRCS:%.c=%_debug.o))
 
 LIBFT_NAME		=	libft.a
 LIBFT_NAME_D	=	libft_debug.a
@@ -65,15 +63,16 @@ COLOR_LYELLOW	=	\033[93m
 COLOR_LCYAN		=	\033[96m
 NEWLINE			=	\n
 
-%.o				:	%.c $(HEADER)
-					@$(CC) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
-					@printf "$(COLOR_LCYAN)build object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
-					@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
+$(OBJS_DIR)/%.o			:	$(SRCS_DIR)/%.c $(HEADERS)
+							@mkdir -p $(OBJS_DIR) 
+							@$(CC) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
+							@printf "$(COLOR_LCYAN)build object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+							@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
 
-%_debug.o		:	%.c $(HEADER)
-					@$(CC) $(CC_FLAGS_D) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
-					@printf "$(COLOR_LCYAN)build debug object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
-					@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
+$(OBJS_DIR)/%_debug.o	:	$(SRCS_DIR)/%.c $(HEADERS)
+							@$(CC) $(CC_FLAGS_D) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
+							@printf "$(COLOR_LCYAN)build debug object$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
+							@printf "ready $(COLOR_LYELLOW)$@$(NOCOLOR)$(NEWLINE)"
 
 print-%  		: ; @echo $* = $($*)
 
