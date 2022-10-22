@@ -4,8 +4,6 @@ static bool	ft_fill_images(t_env	*env)
 {
 	int	i;
 
-//	if (!env || !env->images)
-//		return (false);
 	i = 0;
 	while (i < COUNT_TEXTURES)
 	{
