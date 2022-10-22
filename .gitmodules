@@ -1,4 +1,5 @@
 [submodule "libs/libft"]
+	branch = main
 	path = libs/libft
 	url = https://github.com/theillarion/21-libft.git
 [submodule "libs/minilibx-linux"]

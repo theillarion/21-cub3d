@@ -8,7 +8,7 @@ bool	ft_create_mlx(t_mlx	*mlx)
 	width = 0;
 	height = 0;
 	mlx->ptr = mlx_init();
-	if (mlx->ptr == NULL)
+	if (!mlx->ptr)
 		return (false);
 	mlx_get_screen_size(mlx->ptr, &width, &height);
 	if (width == 0 || height == 0)
@@ -35,7 +35,7 @@ bool	ft_create_window(const t_mlx *mlx, t_window	*win, char *name)
 		|| !win->canvas.pixels)
 		return (false);
 	i = -1;
-	while (i++ < win->canvas.height)
+	while (++i < win->canvas.height)
 	{
 		win->canvas.pixels[i] = (t_srgb *)malloc(win->canvas.width * sizeof(**win->canvas.pixels));
 		if (!win->canvas.pixels[i])

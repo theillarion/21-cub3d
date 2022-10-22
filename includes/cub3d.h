@@ -2,6 +2,8 @@
 # define CUB3D_H
 
 # include <math.h>
+# include <errno.h>
+# include <string.h> 
 # include "mlx.h"
 # include "mlx_int.h"
 # include "libft.h"
@@ -150,15 +152,21 @@ void	ft_rotate(t_point *dir, t_point *plane, double speed);
 void	ft_action_rotate(t_env *env);
 void	ft_action_move(t_env *env);
 
+//		destroy.c
+void	ft_destroy(t_env	*env);
+
 //		draw.c
 void	ft_draw_canvas(t_env	*env);
 
 //		events.c
 int		ft_event_key_press(int keycode, t_env	*env);
 int		ft_event_key_release(int keycode, t_env	*env);
+int		ft_event_exit(t_env *env);
 
 //		exit.c
-int		ft_success(t_env	*env);
+void	ft_success(t_env	*env);
+void	ft_failure(t_env	*env, const char	*msg);
+void	ft_failure_errno(t_env	*env);
 
 //		fill.c
 bool	ft_fill(t_env	*env);

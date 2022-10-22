@@ -16,3 +16,9 @@ int	ft_event_key_release(int keycode, t_env	*env)
 		ft_success(env);
 	return (EXIT_SUCCESS);
 }
+
+int	ft_event_exit(t_env *env)
+{
+	ft_success(env);
+	return (EXIT_SUCCESS);
+}
