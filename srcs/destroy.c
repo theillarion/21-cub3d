@@ -15,40 +15,28 @@ void	ft_destroy_display(void	**ptr)
 }
 #endif
 
-void ft_smart_free(void **ptr)
-{
-	if (ptr && *ptr)
-	{
-		free(*ptr);
-		*ptr = NULL;
-	}
-}
-
-void ft_destroy_pixels(t_image	*image)
-{
-	int	i;
-
-	if (!image || !image->pixels)
-		return ;
-	i = 0;
-	while (i < image->height)
-		ft_smart_free((void **)&image->pixels[i++]);
-	ft_smart_free((void **)&image->pixels);
-}
-
 void	ft_destroy_images(t_env	*env)
 {
 	int	i;
 
-	if (!env || !env->images)
+	if (!env)
 		return ;
-	i = 0;
-	while (i < COUNT_TEXTURES)
+	i = -1;
+	while (++i < COUNT_TEXTURES)
 	{
 		mlx_destroy_image(env->mlx.ptr, env->images[i].data.img);
-		ft_destroy_pixels(&env->images[i]);
-		++i;
+		ft_foreach((void **)env->images[i].pixels, &free);
+		ft_smart_free((void **)&env->images[i].pixels);
 	}
+}
+
+static void	ft_destroy_paths(t_setting	*settings)
+{
+	int	i;
+
+	i = -1;
+	while (++i < COUNT_TEXTURES)
+		ft_smart_free((void **)&settings->paths[i]);
 }
 
 void	ft_destroy(t_env	*env)
@@ -56,7 +44,11 @@ void	ft_destroy(t_env	*env)
 	if (!env || !env->mlx.ptr)
 		return;
 	ft_destroy_images(env);
-	ft_destroy_pixels(&env->win.canvas);
+	ft_foreach((void **)env->win.canvas.pixels, &free);
+	ft_smart_free((void **)&env->win.canvas.pixels);
+	ft_foreach((void **)env->settings.map, &free);
+	ft_smart_free((void **)&env->settings.map);
+	ft_destroy_paths(&env->settings);
 	if (env->win.canvas.data.img)
 		mlx_destroy_image(env->mlx.ptr, env->win.canvas.data.img);
 	if (env->win.ptr)
