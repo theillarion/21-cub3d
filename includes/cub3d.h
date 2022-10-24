@@ -6,7 +6,7 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:32:23 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/22 20:35:23 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:25:33 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,11 +245,8 @@ void	free_colors(char *const *c);
 void	ft_foreach(void **array, void (*func)(void *));
 void	ft_smart_free(void	**address);
 
-//			temp_fill_settings.c
-bool		ft_temp_fill_settings(t_setting	*settings);
-
-//			utilities.c
-void		ft_foreach(void **array, void (*func)(void *));
-void		ft_smart_free(void	**address);
+//		utilities.c
+void	ft_foreach(void **array, void (*func)(void *));
+void	ft_smart_free(void	**address);
 
 #endif

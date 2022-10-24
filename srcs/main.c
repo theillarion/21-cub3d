@@ -6,7 +6,7 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:14:10 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/24 12:19:40 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:39:48 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	main(int argc, char	**argv)
 {
 	t_env	env;
 
-	if (argc != 2)
-		ft_failure(&env, "wrong number of arguments");
 	ft_init(&env);
+	if (argc != 2)
+		ft_failure(NULL, "wrong number of arguments");
 	read_scene(argv[1], &env.settings);
 	env.settings.position.x += 0.5;
 	env.settings.position.y += 0.5;
