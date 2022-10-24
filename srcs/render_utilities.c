@@ -6,13 +6,11 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:14:17 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/22 20:14:18 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:53:21 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-//extern int env[MAP_WIDTH][MAP_HEIGHT];
 
 static void	ft_algorithm_dda_preparation(t_game *game, t_point *side_dist,
 				t_point	*delta_dist)
