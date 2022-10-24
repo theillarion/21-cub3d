@@ -9,7 +9,7 @@ LINK			=
 
 SRCS_DIR		=	srcs
 SRCS			=	action.c destroy.c draw.c events.c exit.c fill.c image_utilities.c init.c main.c mlx_utilities.c point_utilities.c render_utilities.c \
-					render.c srgb_utilities.c temp_map.c map.c get_next_line.c map_parse_utilities.c map_utilities.c map_params_utilities.c map_params.c \
+					render.c srgb_utilities.c map.c get_next_line.c map_parse_utilities.c map_utilities.c map_params_utilities.c map_params.c \
 					map_common_utilities.c map_params_color_utilities.c utilities.c
 
 HEADERS_DIR		=	includes
@@ -126,6 +126,7 @@ re				:	fclean all
 					@printf "ready $(COLOR_LYELLOW)$(NAME)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
 
 norm			:
-					@norminette $(addprefix #(SRCS_DIR)/,$(SRCS)) $(HEADERS)
+					@norminette $(addprefix $(SRCS_DIR)/,$(SRCS)) $(HEADERS)
+					@$(MAKE) -s norm -C $(LIBFT_PATH)
 					@printf "$(COLOR_LCYAN)norminette$(NOCOLOR) [$(COLOR_LGREEN)info$(NOCOLOR)]: "
 					@printf "ready $(COLOR_LYELLOW)$(NAME_S)$(NOCOLOR) for $(COLOR_LYELLOW)$(OS)$(NOCOLOR)$(NEWLINE)"
