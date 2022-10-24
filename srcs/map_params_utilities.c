@@ -100,7 +100,7 @@ int	set_rgb(t_srgb *srgb, char *string_of_map)
 		return (-1);
 	while (string_of_map[len] && ft_isdigit(string_of_map[len]))
 		add_cdigit(string_of_map, &len, &tmp, &(*(c + 2)));
-	if (ft_atoi(c[2]) > 255)
+	if (ft_atoi(c[2]) > 255 || ft_atoi(c[2]) < 0)
 		return (-1);
 	tmp = string_of_map + len;
 	if (tmp)

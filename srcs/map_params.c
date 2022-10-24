@@ -98,7 +98,7 @@ void	check_all_params_filled(t_setting *g, int *params_filled)
 		|| ! g->paths[TEX_SOUTH] || ! g->paths[TEX_NORTH])
 		params_filled_local = 0;
 	if (params_filled_local
-		&& (! g->ceilling.data || ! g->floor.data))
+		&& (g->ceilling.data == -1 || g->floor.data == -1))
 		params_filled_local = 0;
 	*params_filled = params_filled_local;
 }

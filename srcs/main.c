@@ -7,6 +7,8 @@ int	main(int argc, char	**argv)
 	if (argc != 2)
 		return (1);
 	ft_init(&env);
+	env.settings.ceilling.data = -1;
+	env.settings.floor.data = -1;
 	read_scene(argv[1], &env.settings);
 	env.settings.speed_move = SPEED_MOVE;
 	env.settings.speed_rotate = SPEED_ROTATE;
