@@ -19,6 +19,8 @@ int	main(int argc, char	**argv)
 	if (argc != 2)
 		ft_failure(&env, "wrong number of arguments");
 	ft_init(&env);
+	env.settings.ceilling.data = -1;
+	env.settings.floor.data = -1;
 	read_scene(argv[1], &env.settings);
 	env.settings.position.x += 0.5;
 	env.settings.position.y += 0.5;
