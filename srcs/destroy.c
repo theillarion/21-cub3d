@@ -6,7 +6,7 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:26:16 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/22 20:54:05 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:53:10 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void	ft_destroy_images(t_env	*env)
 	i = -1;
 	while (++i < COUNT_TEXTURES)
 	{
-		mlx_destroy_image(env->mlx.ptr, env->images[i].data.img);
+		if (env->images[i].data.img)
+			mlx_destroy_image(env->mlx.ptr, env->images[i].data.img);
 		ft_foreach((void **)env->images[i].pixels, &free);
 		ft_smart_free((void **)&env->images[i].pixels);
 	}

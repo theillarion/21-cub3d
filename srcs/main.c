@@ -6,7 +6,7 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:14:10 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/24 12:39:48 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:56:52 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ int	main(int argc, char	**argv)
 	if (argc != 2)
 		ft_failure(NULL, "wrong number of arguments");
 	read_scene(argv[1], &env.settings);
-	env.settings.position.x += 0.5;
-	env.settings.position.y += 0.5;
-	env.settings.speed_move = SPEED_MOVE;
-	env.settings.speed_rotate = SPEED_ROTATE;
 	if (!ft_fill(&env))
 		ft_failure(&env, "filling");
 	mlx_hook(env.win.ptr, KeyPress,
