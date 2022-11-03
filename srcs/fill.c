@@ -6,7 +6,7 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:14:06 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/24 13:38:55 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:42:52 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	ft_fill_images(t_env	*env)
 			|| env->images[i].height <= 0)
 			return (false);
 		ft_set_data_image(&env->images[i].data);
-		ft_set_color_pixels(env->images[i].data.img, &env->images[i]);
+		ft_set_color_pixels(&env->images[i]);
 		if (!env->images[i].data.addr || !env->images[i].pixels)
 			return (false);
 		++i;

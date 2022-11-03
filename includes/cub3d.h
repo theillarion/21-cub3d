@@ -6,7 +6,7 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:32:23 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/24 12:25:33 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:42:36 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,25 @@
 # include <errno.h>
 # include <string.h> 
 # include "mlx.h"
-# include "mlx_int.h"
 # include "libft.h"
 # include "keys.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <errno.h>
+# include <fcntl.h>
 
 //	temp
 # include <stdio.h>
 
-# define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
+typedef unsigned int	t_uint;
 
 # define COUNT_TEXTURES 4
-
 # define CLEAR_PIXEL 0x0
-
 # define EPSILON 1e-15
-
 # define DEFAULT_DIR_X -1
 # define DEFAULT_DIR_Y 0
-
 # define DEFAULT_PLANE_X 0.f
 # define DEFAULT_PLANE_Y 0.66f
-
 # define SPEED_ROTATE 0.15707963267f
 # define SPEED_MOVE 0.5f
 # define NORTH 0
@@ -49,6 +43,20 @@
 # define WEST 1.57079632679f
 # define EAST -WEST
 # define BUFFER_SIZE 1024
+
+enum e_events
+{
+	KeyPress		= 2,
+	KeyRelease		= 3,
+	DestroyNotify	= 17
+};
+
+enum e_events_mask
+{
+	KeyPressMask		= (1L<<0),
+	KeyReleaseMask		= (1L<<1),
+	ButtonReleaseMask	= (1L<<3)
+};
 
 enum e_textures
 {
@@ -194,8 +202,8 @@ int		main(int argc, char	**argv);
 bool	ft_create_mlx(t_mlx	*mlx);
 bool	ft_create_window(const t_mlx *mlx, t_window	*win, char *name);
 void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		ft_get_pixel(char *data, int x, int opp, bool byte_order);
-void	ft_set_color_pixels(void *ptr, t_image	*image);
+t_uint	ft_get_pixel(char *data, int x, int opp, bool byte_order);
+void	ft_set_color_pixels(t_image	*image);
 
 //		point_utilities.c
 void	ft_set_point(t_point *point, double x, double y);

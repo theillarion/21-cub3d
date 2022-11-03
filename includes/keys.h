@@ -6,7 +6,7 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 18:53:10 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/09 18:53:13 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:49:21 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ enum	e_keys
 	KeyRight	= 2,
 	KeyDown		= 1
 };
+
 #  else
 
 enum	e_keys
@@ -54,6 +55,7 @@ enum	e_keys
 	KeyRight	= 0,
 	KeyDown		= 0
 };
+
 #  endif
 # endif
 

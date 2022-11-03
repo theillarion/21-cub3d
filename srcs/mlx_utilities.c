@@ -6,11 +6,12 @@
 /*   By: illarion <glashli@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 20:14:13 by illarion          #+#    #+#             */
-/*   Updated: 2022/10/22 20:56:03 by illarion         ###   ########.fr       */
+/*   Updated: 2022/10/28 18:43:38 by illarion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "mlx_int.h"
 
 bool	ft_create_mlx(t_mlx	*mlx)
 {
@@ -66,50 +67,35 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	ft_get_pixel(char *data, int x, int opp, bool byte_order)
+t_uint	ft_get_pixel(char *data, int x, int opp, bool byte_order)
 {
-	int	result;
-	int	dec;
-
-	result = 0;
-	dec = opp;
-	while (dec--)
-	{
-		if (byte_order)
-			result |= ((((int)*(data + x * opp + dec)) & 0xFF)
-					<< (dec * 8));
-		else
-			result |= ((((int)*(data + x * opp + opp - dec - 1)) & 0xFF)
-					<< (opp - dec - 1) * 8);
-	}
-	return (result);
+	(void)byte_order;
+	return (*((unsigned int *)(data + opp * x)));
 }
 
-void	ft_set_color_pixels(void *ptr, t_image	*image)
+void	ft_set_color_pixels(t_image	*image)
 {
-	t_img		img;
 	void		*data;
 	int			i;
 	int			j;
 
-	img = *(t_img *)ptr;
-	data = img.data;
-	image->pixels = (t_srgb **)malloc((img.height + 1)
+	image->pixels = (t_srgb **)malloc((image->height + 1)
 			* sizeof(*image->pixels));
-	image->width = img.width;
-	image->height = img.height;
+	if (!image->pixels)
+		return ;
+	data = image->data.addr;
 	i = -1;
-	while (++i < img.height)
+	while (++i < image->height)
 	{
-		image->pixels[i] = (t_srgb *)malloc(img.width
+		image->pixels[i] = (t_srgb *)malloc(image->width
 				* sizeof(**image->pixels));
 		j = -1;
-		while (++j < img.width)
+		while (++j < image->width)
 		{
 			ft_srgb_set_raw(&image->pixels[i][j],
-				ft_get_pixel(data, j, img.bpp / 8, img.image->byte_order));
+				ft_get_pixel(data, j, image->data.bits_per_pixel / 8, 1));
 		}
-		data += img.size_line;
+		data += image->data.line_length;
 	}
 	image->pixels[i] = NULL;
 }
