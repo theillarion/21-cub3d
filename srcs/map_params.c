@@ -58,6 +58,8 @@ int	fill_params_srgb(t_setting *g, char *string_of_map)
 		string_of_map += 1;
 		if (! skip_ws(&string_of_map))
 			return (-1);
+		if (!ft_isdigit(*string_of_map))
+			return (-1);
 		if (set_rgb(&(g->floor), string_of_map) == -1)
 			return (-1);
 	}
@@ -65,6 +67,8 @@ int	fill_params_srgb(t_setting *g, char *string_of_map)
 	{
 		string_of_map += 1;
 		if (! skip_ws(&string_of_map))
+			return (-1);
+		if (!ft_isdigit(*string_of_map))
 			return (-1);
 		if (set_rgb(&(g->ceilling), string_of_map) == -1)
 			return (-1);
