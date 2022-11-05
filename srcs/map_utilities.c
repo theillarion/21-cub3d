@@ -28,8 +28,8 @@ void	set_position(t_setting *g, int **map, int *map_row, int *map_col)
 {
 	if (g->position.x || g->position.y)
 		map_error();
-	map[*map_row][++(*map_col)] = 0;
-	ft_set_point(&g->position, *map_row, *map_col);
+	map[*map_row][*map_col] = 0;
+	ft_set_point(&g->position, *map_row + 0.5, *map_col + 0.5);
 }
 
 int	calc_map_width_height(t_setting *g, char *mapline)
@@ -56,8 +56,8 @@ int	calc_map_width_height(t_setting *g, char *mapline)
 	errno = 0;
 	if (last_width == -1)
 		ft_raise_error("Empty map!");
-	(*g).map_height = height + 4;
-	(*g).map_width = last_width + 2;
+	(*g).map_height = height + 3;
+	(*g).map_width = last_width + 1;
 	return (0);
 }
 
@@ -66,16 +66,16 @@ void	fill_map(t_setting *g, char *ml, int **map)
 	int	map_row;
 	int	map_col;
 
-	map_row = 1;
+	map_row = 0;
 	while (ml && *ml && ++map_row)
 	{
-		map_col = 1;
-		while (ml && *ml && *ml != '\n')
+		map_col = 0;
+		while (ml && *ml && *ml != '\n' && ++map_col)
 		{
 			if (*ml == '0' || *ml == '1' )
-				map[map_row][++map_col] = (int) *ml - 48;
+				map[map_row][map_col] = (int) *ml - 48;
 			else if (*ml == ' ')
-				map[map_row][++map_col] = -1;
+				map[map_row][map_col] = -1;
 			else if (*ml == 'N' || *ml == 'S' || *ml == 'W' || *ml == 'E')
 			{
 				set_position(g, map, &map_row, &map_col);

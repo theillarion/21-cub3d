@@ -49,8 +49,6 @@ bool	ft_fill(t_env	*env)
 	env->game.pos.y = env->settings.position.y;
 	ft_set_point(&env->game.dir, DEFAULT_DIR_X, DEFAULT_DIR_Y);
 	ft_set_point(&env->game.plane, DEFAULT_PLANE_X, DEFAULT_PLANE_Y);
-	env->settings.position.x += 0.5;
-	env->settings.position.y += 0.5;
 	ft_rotate(&env->game.dir, &env->game.plane, env->settings.direction);
 	return (true);
 }
